@@ -416,6 +416,7 @@ def read(data_path, **kwargs):
         data = read_as_pickle(data_path, **kwargs)
     else:
         data = read_as_plain(data_path, **kwargs)
+    # read config file.
     return data
 
 

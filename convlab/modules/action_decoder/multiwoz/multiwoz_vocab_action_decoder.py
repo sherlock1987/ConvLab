@@ -59,19 +59,21 @@ class ActionVocab(object):
                 except SkipException as e:
                     print(act_strings)
                 if len(self.vocab) >= num_actions:
+                    # when number is enougn, just quit this stuff.
                     break
         print("{} actions are added to vocab".format(len(self.vocab)))
         # pprint(self.vocab)
 
     def get_action(self, action_index):
         return self.vocab[action_index]
-
+# act = ActionVocab()
 
 class MultiWozVocabActionDecoder(object):
     def __init__(self, vocab_path=None, num_actions=300):
         self.action_vocab = ActionVocab(num_actions=num_actions)
         self.current_domain = 'Restaurant'
 
+    # from current state_index, and state to get the action. [['none', 'none']]
     def decode(self, action_index, state):
         domains = ['Attraction', 'Hospital', 'Hotel', 'Restaurant', 'Taxi', 'Train', 'Police']
         delex_action = self.action_vocab.get_action(action_index)

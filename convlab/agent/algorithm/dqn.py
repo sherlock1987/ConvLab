@@ -124,6 +124,7 @@ class VanillaDQN(SARSA):
         return batch
 
     @lab_api
+    # core code
     def train(self):
         '''
         Completes one training step for the agent if it is time to train.
@@ -157,7 +158,7 @@ class VanillaDQN(SARSA):
         '''Update the agent after training'''
         return super().update()
 
-
+# core code
 class DQNBase(VanillaDQN):
     '''
     Implementation of the base DQN algorithm.
@@ -182,19 +183,23 @@ class DQNBase(VanillaDQN):
         in_dim = self.body.state_dim
         out_dim = net_util.get_out_dim(self.body)
         NetClass = getattr(net, self.net_spec['type'])
-        self.net = NetClass(self.net_spec, in_dim, out_dim)
+        # two exactly same network.
+        self.net =        NetClass(self.net_spec, in_dim, out_dim)
         self.target_net = NetClass(self.net_spec, in_dim, out_dim)
         self.net_names = ['net', 'target_net']
         # init net optimizer and its lr scheduler
         self.optim = net_util.get_optim(self.net, self.net.optim_spec)
+
         self.lr_scheduler = net_util.get_lr_scheduler(self.optim, self.net.lr_scheduler_spec)
         net_util.set_global_nets(self, global_nets)
         self.post_init_nets()
+        # two different name and will update in different place.
         self.online_net = self.target_net
         self.eval_net = self.target_net
 
     def calc_q_loss(self, batch):
         '''Compute the Q value loss using predicted and target Q values from the appropriate networks'''
+        # batch contains reward, states, action, next_states
         states = batch['states']
         next_states = batch['next_states']
         q_preds = self.net(states)
@@ -230,7 +235,6 @@ class DQNBase(VanillaDQN):
         '''Updates self.target_net and the explore variables'''
         self.update_nets()
         return super().update()
-
 
 class DQN(DQNBase):
     '''

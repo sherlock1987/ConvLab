@@ -106,6 +106,7 @@ class MultiWozEnvironment(object):
         return deepcopy(self.simulator.sys_act)
 
     def step(self, action):
+        # give reward, stop_sign based on the action.
         user_response, user_act, session_over, reward = self.simulator.response(action, self.history)
         self.last_act = user_act
         self.history.extend([f'{action}', f'{user_response}'])

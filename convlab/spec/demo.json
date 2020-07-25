@@ -576,7 +576,7 @@
       "max_trial": 1,
       "max_session": 1,
       "resources": {
-        "num_cpus": 1,
+        "num_cpus": 10,
         "num_gpus": 0
       }
     }
@@ -1849,7 +1849,7 @@
           "start_val": 0.1,
           "end_val": 0.01,
           "start_step": 0,
-          "end_step": 500000,
+          "end_step": 50000
         },
         "gamma": 0.9,
         "training_batch_iter": 1,
